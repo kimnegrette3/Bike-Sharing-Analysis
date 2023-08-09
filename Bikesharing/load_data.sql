@@ -1,17 +1,18 @@
+
 -- Grant access to local files from the client side
--- SET GLOBAL local_infile = 1;
+SET GLOBAL local_infile = 1;
 
 -- create database
--- CREATE DATABASE IF NOT EXISTS BikeSharing;
+CREATE DATABASE IF NOT EXISTS BikeSharing_v3;
 
 -- use database
-USE BikeSharing_v2;
+USE BikeSharing_v3;
 
 -- Setting safe update mode to off
 SET SQL_SAFE_UPDATES = 0;
 
--- create tables 
-CREATE TABLE IF NOT EXISTS jan_22 (
+-- Create table to store all the csv files in it
+CREATE TABLE IF NOT EXISTS rides2022 (
 	ride_id VARCHAR(255),
 	rideable_type VARCHAR(255),
     started_at DATETIME,
@@ -20,341 +21,56 @@ CREATE TABLE IF NOT EXISTS jan_22 (
     start_station_id VARCHAR(255),
     end_station_name VARCHAR(255),
     end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
+    start_lat VARCHAR(255),
+    start_lng VARCHAR(255),
+    end_lat VARCHAR(255),
+    end_lng VARCHAR(255),
     member_casual VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS feb_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
+-- Run a python script (from visual studio code) to upload all the csv files and append them to the rides2022 table
+/*
+# Database connection details
+database = 'Bikesharing_v3'
+username = '--'
+password = '--'
+host = '127.0.0.1'
+port = '3306'
+table_name = 'rides2022'
 
-CREATE TABLE IF NOT EXISTS mar_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
+# Directory containing the CSV files
+directory = 'path_to_file/rides_2022'
 
+# Get a list of CSV files in the directory
+file_list = [f for f in os.listdir(directory) if f.endswith('.csv')]
 
-CREATE TABLE IF NOT EXISTS apr_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
+# Database connection URL
+connection_url = f'mysql+pymysql://{username}:{password}@{host}:{port}/{database}'
 
-CREATE TABLE IF NOT EXISTS may_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
+# Create SQLAlchemy engine
+engine = create_engine(connection_url)
 
-CREATE TABLE IF NOT EXISTS jun_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
+# Loop through the files and load each one into the database
+for file in file_list:
+    filepath = os.path.join(directory, file)
+    df = pd.read_csv(filepath)  
+    df.to_sql(table_name, engine, if_exists='append', index=False)
 
-CREATE TABLE IF NOT EXISTS jul_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS aug_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS sep_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS oct_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS nov_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS dec_22 (
-	ride_id VARCHAR(255),
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
-
-
--- Load data into tables from csv files
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202201-divvy-tripdata/202201-divvy-tripdata.csv'
-INTO TABLE jan_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202202-divvy-tripdata/202202-divvy-tripdata.csv'
-INTO TABLE feb_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202203-divvy-tripdata/202203-divvy-tripdata.csv'
-INTO TABLE mar_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202204-divvy-tripdata/202204-divvy-tripdata.csv'
-INTO TABLE apr_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-    
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202205-divvy-tripdata/202205-divvy-tripdata.csv'
-INTO TABLE may_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202206-divvy-tripdata/202206-divvy-tripdata.csv'
-INTO TABLE jun_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202207-divvy-tripdata/202207-divvy-tripdata.csv'
-INTO TABLE jul_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202208-divvy-tripdata/202208-divvy-tripdata.csv'
-INTO TABLE aug_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202209-divvy-tripdata/202209-divvy-tripdata.csv'
-INTO TABLE sep_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202210-divvy-tripdata/202210-divvy-tripdata.csv'
-INTO TABLE oct_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202211-divvy-tripdata/202211-divvy-tripdata.csv'
-INTO TABLE nov_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/Users/kim/OneDrive - Universidad de los Andes/DATA ANALYSIS/Google Capstone Project/202212-divvy-tripdata/202212-divvy-tripdata.csv'
-INTO TABLE dec_22
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 ROWS;
-
--- 90903 row(s) affected, 1024 warning(s): 1262 Row 1 was truncated; it contained more data than there were input columns
--- Hay errores en la carga de las tablas, REVISAR! -- Listo, habia que poner "LINES TERMINATED BY '\r\n' y teníamos solo la '\n'
--- Siguen saliendo truncated las latitudes y longitudes del end. La vamos a dejar así porque ahora no vamos a trabajar con mapas. 
-
--- Combine all data in a single table
--- Create a table
-CREATE TABLE IF NOT EXISTS trips_combined (
-	ride_id VARCHAR(255) UNIQUE,
-	rideable_type VARCHAR(255),
-    started_at DATETIME,
-    ended_at DATETIME,
-    start_station_name VARCHAR(255),
-    start_station_id VARCHAR(255),
-    end_station_name VARCHAR(255),
-    end_station_id VARCHAR(255),
-    start_lat DOUBLE,
-    start_lng DOUBLE,
-    end_lat DOUBLE,
-    end_lng DOUBLE,
-    member_casual VARCHAR(255)
-);
-
--- Cargar los datos de todas las tablas con union all
-
-INSERT INTO trips_combined
-SELECT * FROM jan_22
-UNION ALL
-SELECT * FROM feb_22
-UNION ALL
-SELECT * FROM mar_22
-;
-
-INSERT INTO trips_combined
-SELECT * FROM apr_22
-UNION ALL
-SELECT * FROM may_22
-UNION ALL
-SELECT * FROM jun_22
-;
-
-INSERT INTO trips_combined
-SELECT * FROM jul_22
-UNION ALL
-SELECT * FROM aug_22
-;
-
-INSERT INTO trips_combined
-SELECT * FROM sep_22
-;
-
-INSERT INTO trips_combined
-SELECT * FROM oct_22
-UNION ALL
-SELECT * FROM nov_22
-UNION ALL
-SELECT * FROM dec_22
-;
+# Close the database engine
+engine.dispose()
+*/
 
 
 -- Count for total records 5667717
 SELECT COUNT(*) 
 FROM trips_combined;
 
-SELECT COUNT(DISTINCT(ride_id)) -- total distincts 5667717 no duplicates
-FROM trips_combined;
+-- Count duplicates in ride_id column
+SELECT COUNT(*), ride_id
+FROM rides2022
+GROUP BY ride_id
+HAVING COUNT(*) > 1;
+
 
 -- count for null or empty values
 SELECT 
@@ -468,15 +184,12 @@ RENAME COLUMN member_casual TO user_type;
 ALTER TABLE trips_combined
 ADD COLUMN started_day VARCHAR(255),
 ADD COLUMN started_month VARCHAR(255);
-#ADD COLUMN ended_day VARCHAR(255),
-#ADD COLUMN ended_month VARCHAR(255);
 
 
 UPDATE trips_combined
 SET started_day = DATE_FORMAT(started_at, '%W'),
 	started_month = DATE_FORMAT(started_at, '%M');
-    #ended_day = DATE_FORMAT(ended_date, '%W'),
-	#ended_month = DATE_FORMAT(ended_date, '%M');
+
     	
     
 -- Calculate trips duration and delete trips with less than or equal to 1 min length and more than 1440 min (24h)
@@ -505,16 +218,8 @@ DELETE
 FROM trips_combined
 WHERE trip_duration > 1440;
 
--- Calculate mean, max and min of trip duration (round to 2 decimals) for total and for hours of the day, weekdays and months, for each user type.
 
-
--- Calculate total, mean, max and min of trip count (round to 2 decimals) for total and for hours of the day, weekdays and months, and for each user type.
-
-
--- Make a list of the most common start and end stations per user type. Try to relate with tusristics areas or something like that. 
-
-
--- Export table to explore on python pandas
+-- Save file in csv format
 SELECT 'ride_id', 'rideable_type', 'started_at', 'ended_at', 'start_station_name', 'end_station_name', 'user_type', 'started_day', 'started_month',  'trip_duration'
 UNION ALL
 SELECT *
@@ -524,3 +229,5 @@ FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n';
 -- 5440115 rows affected
+
+
