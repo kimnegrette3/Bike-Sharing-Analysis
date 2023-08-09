@@ -39,14 +39,14 @@ IGNORE 1 ROWS;
 /* Script to load data from python
 # Database connection details
 database = 'Bikesharing_v3'
-username = 'root'
-password = 'toor'
+username = '--'
+password = '--'
 host = '127.0.0.1'
 port = '3306'
 table_name = 'rides2022'
 
 # Directory containing the CSV files
-directory = 'C:/Users/usuario/OneDrive - Universidad de los andes/DATA ANALYSIS/Google Capstone Project/rides_2022'
+directory = 'path_to_file/rides_2022'
 
 # Get a list of CSV files in the directory
 file_list = [f for f in os.listdir(directory) if f.endswith('.csv')]
@@ -134,15 +134,12 @@ RENAME COLUMN member_casual TO user_type;
 ALTER TABLE trips_combined
 ADD COLUMN started_day VARCHAR(255),
 ADD COLUMN started_month VARCHAR(255);
-#ADD COLUMN ended_day VARCHAR(255),
-#ADD COLUMN ended_month VARCHAR(255);
+
 
 
 UPDATE trips_combined
 SET started_day = DATE_FORMAT(started_at, '%W'),
 	started_month = DATE_FORMAT(started_at, '%M');
-    #ended_day = DATE_FORMAT(ended_date, '%W'),
-	#ended_month = DATE_FORMAT(ended_date, '%M');
     	
     
 -- Calculate trips duration and delete trips with less than or equal to 1 min length and more than 1440 min (24h)
@@ -171,25 +168,7 @@ DELETE
 FROM trips_combined
 WHERE trip_duration > 1440;
 
--- Calculate mean, max and min of trip duration (round to 2 decimals) for total and for hours of the day, weekdays and months, for each user type.
--- Calculate total, mean, max and min of trip count (round to 2 decimals) for total and for hours of the day, weekdays and months, and for each user type.
--- Make a list of the most common start and end stations per user type. Try to relate with tusristics areas or something like that. 
--- Export table to explore on python pandas
-
--- Limpiar outliers de la columna trip duration la regla de los tres sigmas. Evaluar si se reduce considerablemente la cantidad de datos, poder graficar en tableau directament
--- Make a view with key summary statistics
-/*
-CREAR STORE PROCEDURE
-END
-1) COUNT user_type, COUNT(*).  - grafico de lineas agrupado por usertype eje X linea temporal
-2) SELECT usert_type, AVG(trip_duration) GROUP BY user_type - 
-3)SELECT user_tpye, COUNT(*) GROUP BY started_hour ORDER BY DESC
-4) Calcular distancia promedio de viajes agrupado por usuarios. Crear una nueva columna donde ira el dato tipo POINT(revisar chat gpt)
-
-BEGIN
-CREAR VIEWS PARA CADA CALCULO
-*/
-
+-- Store final version in csv file
 SELECT 'ride_id', 'rideable_type', 'started_at', 'ended_at', 'start_station_name', 'end_station_name', 'user_type', 'started_day', 'started_month',  'trip_duration'
 UNION ALL
 SELECT *
