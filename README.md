@@ -1,6 +1,4 @@
-# Data-Analysis-Portfolio
-
-## BikeSharing Project
+# BikeSharing Analysis Project
 
 The BikeSharing project is a comprehensive data analysis project developed as part of the Google Data Analyst Professional Certificate program. It demonstrates my ability to analyze large datasets, derive insights, and make informed decisions. In this project, I worked with a large dataset related to bike sharing. I performed data cleaning, exploration, visualization, and advanced analysis techniques to gain insights into bike usage patterns, user behavior, and various factors influencing bike rentals. The project involved applying statistical analysis, data manipulation, and data visualization using MySQL, Python and relevant data analysis libraries.
 
