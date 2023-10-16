@@ -28,38 +28,6 @@ CREATE TABLE IF NOT EXISTS rides2022 (
     member_casual VARCHAR(255)
 );
 
--- Run a python script (from visual studio code) to upload all the csv files and append them to the rides2022 table
-/*
-# Database connection details
-database = 'Bikesharing_v3'
-username = '--'
-password = '--'
-host = '127.0.0.1'
-port = '3306'
-table_name = 'rides2022'
-
-# Directory containing the CSV files
-directory = 'path_to_file/rides_2022'
-
-# Get a list of CSV files in the directory
-file_list = [f for f in os.listdir(directory) if f.endswith('.csv')]
-
-# Database connection URL
-connection_url = f'mysql+pymysql://{username}:{password}@{host}:{port}/{database}'
-
-# Create SQLAlchemy engine
-engine = create_engine(connection_url)
-
-# Loop through the files and load each one into the database
-for file in file_list:
-    filepath = os.path.join(directory, file)
-    df = pd.read_csv(filepath)  
-    df.to_sql(table_name, engine, if_exists='append', index=False)
-
-# Close the database engine
-engine.dispose()
-*/
-
 
 -- Count for total records 5667717
 SELECT COUNT(*) 
